@@ -67,10 +67,9 @@ app.get("/getCard/:id", async (req, res) => {
 //UPDATE
 app.put("/updateAllCard/:id", async (req, res) => {
   try {
-    const { id } = req.params; // obtenemos el ID de la URL
-    const updates = req.body; //  los campos que quieres actualizar
+    const { id } = req.params;
+    const updates = req.body;
 
-    // Usamos findByIdAndUpdate para actualizar parcialmente
     const updatedCard = await Card.findByIdAndUpdate(id, updates, {
       new: true,
     });
