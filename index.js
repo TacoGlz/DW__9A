@@ -91,8 +91,8 @@ app.put("/updateAllCard/:id", async (req, res) => {
 //DELETE
 app.delete("/deleteCard/:id", async (req, res) => {
   try {
-    const { id } = req.params; //  se lee el ID de la URL
-    const deletedCard = await Card.findByIdAndDelete(id); // se elimina la tarjeta por id
+    const { id } = req.params;
+    const deletedCard = await Card.findByIdAndDelete(id);
 
     if (!deletedCard) {
       return res.status(404).json({ message: "Card not found" });
@@ -105,38 +105,42 @@ app.delete("/deleteCard/:id", async (req, res) => {
 });
 
 app.patch("/updateCard/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updates = req.body;
+  try {
+    const { id } = req.params;
+    const updates = req.body;
 
-        const updatedCard = await Card.findByIdAndUpdate(id, updates, {
-            new: true,
-        });
+    const updatedCard = await Card.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
 
-        if (!updatedCard) {
-            return res.status(404).json({ message: "Card not found" });
-        }
-
-        res.status(200).json({
-            message: "Card updated successfully",
-            data: updatedCard,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error updating card" });
+    if (!updatedCard) {
+      return res.status(404).json({ message: "Card not found" });
     }
+
+    res.status(200).json({
+      message: "Card updated successfully",
+      data: updatedCard,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating card" });
+  }
 });
 
 app.get("/__endpoints", (req, res) => {
   const routes = [];
   app._router.stack.forEach((middleware) => {
     if (middleware.route) {
-      const methods = Object.keys(middleware.route.methods).map(m => m.toUpperCase());
+      const methods = Object.keys(middleware.route.methods).map((m) =>
+        m.toUpperCase()
+      );
       routes.push({ path: middleware.route.path, methods });
     } else if (middleware.name === "router") {
       middleware.handle.stack.forEach((handler) => {
         if (handler.route) {
-          const methods = Object.keys(handler.route.methods).map(m => m.toUpperCase());
+          const methods = Object.keys(handler.route.methods).map((m) =>
+            m.toUpperCase()
+          );
           routes.push({ path: handler.route.path, methods });
         }
       });
