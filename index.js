@@ -1,7 +1,7 @@
 import express from "express";
 const app = express();
 import { connectDB } from "./db.js";
-import { Card } from "./modelos/Card.js";
+import { Card } from "./models/Cards.js";
 app.use(express.json());
 connectDB();
 
