@@ -28,12 +28,10 @@ app.listen(3000, () => {
   console.log("Servidor Ejecutandose servidor en http://localhost:3000");
 });
 
-//Create
 app.post("/createCard", async (req, res) => {
   try {
     const card = await Card.create(req.body);
     console.log(card);
-    // respond with created card
     res.status(201).json(card).send("Card created successfully");
   } catch (error) {
     console.error(error);
@@ -52,7 +50,7 @@ app.get("/getAllCards", async (req, res) => {
 });
 app.get("/getCard/:id", async (req, res) => {
   try {
-    const { id } = req.params; // obtenemos el ID de la URL
+    const { id } = req.params;
     const cards = await Card.findById(id);
     if (!cards) {
       return res.status(404).json({ message: "Card not found" });
@@ -64,7 +62,6 @@ app.get("/getCard/:id", async (req, res) => {
   }
 });
 
-//UPDATE
 app.put("/updateAllCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -88,7 +85,6 @@ app.put("/updateAllCard/:id", async (req, res) => {
   }
 });
 
-//DELETE
 app.delete("/deleteCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
