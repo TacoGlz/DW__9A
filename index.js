@@ -28,7 +28,7 @@ app.get("/getAllCards", async (req, res) => {
     console.error(error);
     res.status(500).send("Error retrieving cards");
   }
-}); 
+});
 app.get("/getCard/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -41,7 +41,7 @@ app.get("/getCard/:id", async (req, res) => {
     console.error(error);
     res.status(500).send("Error retrieving cards");
   }
-}); 
+});
 
 //UPDATE
 app.put("/updateEntireCard/:id", async (req, res) => {
@@ -127,13 +127,13 @@ app.get("/api/info", async (req, res) => {
   try {
     // Obtener todas las cards para mostrar datos de ejemplo
     const cards = await Card.find().limit(5);
-    
+
     // Información completa sobre todos los endpoints disponibles
     const apiInfo = {
       message: "API Information - All Endpoints Summary",
       timestamp: new Date().toISOString(),
       baseURL: "http://localhost:3000",
-      
+
       endpoints: {
         create: {
           "POST /createCard": {
@@ -142,162 +142,162 @@ app.get("/api/info", async (req, res) => {
             successResponse: {
               status: 201,
               body: "Created card object",
-              message: "Card created successfully"
+              message: "Card created successfully",
             },
             errorResponse: {
               status: 400,
-              message: "Error creating card"
-            }
-          }
+              message: "Error creating card",
+            },
+          },
         },
-        
+
         // READ ENDPOINTS
         read: {
           "GET /getAllCards": {
             description: "Get all cards",
             successResponse: {
               status: 200,
-              body: "Array of card objects"
+              body: "Array of card objects",
             },
             errorResponse: {
               status: 500,
-              message: "Error retrieving cards"
-            }
+              message: "Error retrieving cards",
+            },
           },
           "GET /getCard/:id": {
             description: "Get a specific card by ID",
             parameters: {
-              id: "Card ID (MongoDB ObjectId)"
+              id: "Card ID (MongoDB ObjectId)",
             },
             successResponse: {
               status: 200,
-              body: "Card object"
+              body: "Card object",
             },
             errorResponses: [
               {
                 status: 404,
-                message: "Card not found"
+                message: "Card not found",
               },
               {
                 status: 500,
-                message: "Error retrieving cards"
-              }
-            ]
-          }
+                message: "Error retrieving cards",
+              },
+            ],
+          },
         },
-        
+
         // UPDATE ENDPOINTS
         update: {
           "PUT /updateEntireCard/:id": {
             description: "Update entire card (replace)",
             parameters: {
-              id: "Card ID (MongoDB ObjectId)"
+              id: "Card ID (MongoDB ObjectId)",
             },
             requestBody: "Complete card object",
             successResponse: {
               status: 200,
               body: {
                 message: "Card updated successfully",
-                data: "Updated card object"
-              }
+                data: "Updated card object",
+              },
             },
             errorResponses: [
               {
                 status: 404,
-                message: "Card not found"
+                message: "Card not found",
               },
               {
                 status: 500,
-                message: "Error updating card"
-              }
-            ]
+                message: "Error updating card",
+              },
+            ],
           },
           "PATCH /updateCard/:id": {
             description: "Partially update card",
             parameters: {
-              id: "Card ID (MongoDB ObjectId)"
+              id: "Card ID (MongoDB ObjectId)",
             },
             requestBody: "Partial card object (fields to update)",
             successResponse: {
               status: 200,
               body: {
                 message: "Card updated successfully",
-                data: "Updated card object"
-              }
+                data: "Updated card object",
+              },
             },
             errorResponses: [
               {
                 status: 404,
-                message: "Card not found"
+                message: "Card not found",
               },
               {
                 status: 500,
-                message: "Error updating card"
-              }
-            ]
-          }
+                message: "Error updating card",
+              },
+            ],
+          },
         },
-        
+
         // DELETE ENDPOINTS
         delete: {
           "DELETE /DeleteCard/:id": {
             description: "Delete a card by ID",
             parameters: {
-              id: "Card ID (MongoDB ObjectId)"
+              id: "Card ID (MongoDB ObjectId)",
             },
             successResponse: {
               status: 200,
               body: {
-                message: "Card deleted successfully"
-              }
+                message: "Card deleted successfully",
+              },
             },
             errorResponses: [
               {
                 status: 404,
-                message: "Card not found"
+                message: "Card not found",
               },
               {
                 status: 500,
-                message: "Error deleting card"
-              }
-            ]
-          }
+                message: "Error deleting card",
+              },
+            ],
+          },
         },
-        
+
         // OTHER ENDPOINTS
         other: {
           "GET /hola": {
             description: "Spanish greeting endpoint",
             successResponse: {
               status: 200,
-              body: "¡Hello world from server! :D"
-            }
+              body: "¡Hello world from server! :D",
+            },
           },
           "GET /hello": {
             description: "English greeting endpoint",
             successResponse: {
               status: 200,
-              body: "¡Hello world from server! Express :D"
-            }
+              body: "¡Hello world from server! Express :D",
+            },
           },
           "POST /send": {
             description: "Receive user data",
             requestBody: {
               user: "Username",
-              email: "User email"
+              email: "User email",
             },
             successResponse: {
               status: 200,
-              body: "Data received successfully"
-            }
-          }
-        }
+              body: "Data received successfully",
+            },
+          },
+        },
       },
-      
+
       sampleData: {
         totalCards: cards.length,
-        cards: cards
-      },      
+        cards: cards,
+      },
       statistics: {
         totalEndpoints: 9,
         byMethod: {
@@ -305,22 +305,21 @@ app.get("/api/info", async (req, res) => {
           POST: 3,
           PUT: 1,
           PATCH: 1,
-          DELETE: 1
+          DELETE: 1,
         },
         byCategory: {
           CRUD: 6,
-          Utility: 3
-        }
-      }
+          Utility: 3,
+        },
+      },
     };
-    
+
     res.status(200).json(apiInfo);
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({
       message: "Error retrieving API information",
-      error: error.message
+      error: error.message,
     });
   }
 });
